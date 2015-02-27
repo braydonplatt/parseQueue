@@ -2,17 +2,27 @@
 <html ng-app="parseQ">
 <head>
 	<title>ParseQ</title>
-    <link rel="stylesheet" href="main.css">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="main.css">
 </head>
 <body ng-controller="MainController">
 <input ng-model='postQuestion' placeholder='SearchQuestions'>
 <button class="btn btn-primary" ng-click="postData()">Make me an Answer</button>
 </input>
+
 <div class="container">
-    <ul ng-repeat="question in questions" >
-        <button ng-click="changeStatus(item)">Update</button>
+    <ul ng-repeat="question in questions | filter: {status: 'red'}">
+        <button ng-click="changeStatus(question.objectId)">Update</button>
         {{question.status}}
         <li>{{question.text}}</li>
+
+    </ul>
+    <hr>
+    <ul ng-repeat="question in questions | filter: {status: 'yellow'}">
+        <button ng-click="deleteData(question.objectId)">Delete</button>
+        {{question.status}}
+        <li>{{question.text}}</li>
+
     </ul>
 
 </div>

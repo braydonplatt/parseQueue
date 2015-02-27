@@ -7,7 +7,7 @@ app.service('parseService', function($http, $q){
     $http({
         method: 'POST',
         url: 'https://api.parse.com/1/classes/question',
-        data: {text: question, status: red}
+        data: {text: question, status: 'red'}
 
     })
         .then(function(data){
@@ -30,18 +30,25 @@ app.service('parseService', function($http, $q){
     }
 
 
-    this.updateData = function(object){
-        var deferred = $q.defer();
-        $http({
+    this.updateData = function(questionId){
+        var newStatus = 'yellow';
+        return $http({
             method: 'PUT',
-            url: 'https://api.parse.com/1/classes/question/' + object.objectId,
-            data: object
+            data: {status: newStatus},
+            url: 'https://api.parse.com/1/classes/question/' + questionId
+
         })
-            .then(function(data){
-                console.log(data.data.results);
-                deferred.resolve(data.data.results);
-            })
-        return deferred.promise;
+
+    }
+
+    this.deleteData = function(questionId){
+
+        return $http({
+            method: 'DELETE',
+            url: 'https://api.parse.com/1/classes/question/' + questionId
+
+        })
+
     }
 
     

@@ -11,17 +11,22 @@ app.controller('MainController', function($scope, parseService){
     $scope.getParseData = function(){
         parseService.getData().then(function(data){
             console.log(data);
-            debugger;
             $scope.questions = data;
         })
     };
     $scope.getParseData();
 
     $scope.changeStatus = function(questionId) {
-        question.status = "yellow";
-        parseService.updateData().then(function (data) {
-            getQuestion();
+        parseService.updateData(questionId).then(function (data){
+            $scope.getParseData();
 
         })
         };
+
+    $scope.deleteData = function(questionId) {
+        parseService.deleteData(questionId).then(function(){
+            $scope.getParseData();
+        })
+
+    }
 });
